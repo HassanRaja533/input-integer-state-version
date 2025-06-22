@@ -2,7 +2,7 @@
 (function (__filename){(function (){
 // Import the STATE module and initialize the state database
 
-const STATE = require('./node_modules/STATE') // Import custom STATE module for managing local state and drive
+const STATE = require('STATE') // Import custom STATE module for managing local state and drive
 const statedb = STATE(__filename) // Bind STATE to this module file for namespaced storage
 const { sdb, get } = statedb(fallback_module) // Initialize state DB with fallback data and get tools
 
@@ -182,30 +182,30 @@ function fallback_module () {
   }
 
 }).call(this)}).call(this,"/src/index.js")
-},{"./node_modules/STATE":2}],2:[function(require,module,exports){
-// src/node_modules/STATE.js
+},{"STATE":2}],2:[function(require,module,exports){
+// // src/node_modules/STATE.js
 
-module.exports = function (filename) {
-  return function (fallback_module) {
-    return {
-      sdb: {
-        watch: async function () {
-          return []
-        }
-      },
-      get: async function () {
-        return {
-          id: Math.random().toString(36).substring(2),
-          sdb: {
-            watch: async function () {
-              return []
-            }
-          }
-        }
-      }
-    }
-  }
-}
+// module.exports = function (filename) {
+//   return function (fallback_module) {
+//     return {
+//       sdb: {
+//         watch: async function () {
+//           return []
+//         }
+//       },
+//       get: async function () {
+//         return {
+//           id: Math.random().toString(36).substring(2),
+//           sdb: {
+//             watch: async function () {
+//               return []
+//             }
+//           }
+//         }
+//       }
+//     }
+//   }
+// }
 
 },{}],3:[function(require,module,exports){
 require('./page')
