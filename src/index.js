@@ -1,6 +1,6 @@
 // Import the STATE module and initialize the state database
 
-const STATE = require('./node_modules/STATE') // Import custom STATE module for managing local state and drive
+const STATE = require('STATE') // Import custom STATE module for managing local state and drive
 const statedb = STATE(__filename) // Bind STATE to this module file for namespaced storage
 const { sdb, get } = statedb(fallback_module) // Initialize state DB with fallback data and get tools
 
