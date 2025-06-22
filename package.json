@@ -1,0 +1,37 @@
+{
+  "name": "input-integer-ui-hassan_raja",
+  "version": "0.0.7",
+  "description": "ui-component",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "budo web/page.js:bundle.js --live --open",
+    "build": "browserify web/page.js > bundle.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HassanRaja533/input-integer-ui.git"
+  },
+  "keywords": [
+    "slider"
+  ],
+  "author": "Hassan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/HassanRaja533/input-integer-ui/issues"
+  },
+  "homepage": "https://github.com/HassanRaja533/input-integer-ui#readme",
+  "dependencies": {
+    "browserify": "^17.0.1",
+    "budo": "^11.8.4"
+  },
+  "devDependencies": {
+    "standardx": "^7.0.0"
+  },
+  "standardx": {
+    "ignore": ["bundle.js"],
+    "rules": {
+      "camelcase": 0
+    }
+  }
+}
