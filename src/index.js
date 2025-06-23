@@ -23,9 +23,13 @@ async function input_integer (opts,protocol) {
     style: inject
   }
 
+
+   // Load config from drive/data/opts.json (fallback will provide defaults)
+  const config = await sdb.get(`data/${id}.opts.json`)
+  
   // Destructure input min/max or default to 0/1000
 
-  const { min = 0, max = 1000 } = opts
+  const { min = 0, max = 1000 } = config
   const name = `input-integr-${input_id++}`
 
   // Setup protocol communication with the outside (like parent component)
@@ -125,56 +129,75 @@ function fallback_module () {
    
   }
 }
-// Returns the fallback structure, especially for drive datasets like styles
-   function fallback_instance () {
-    return {
-      drive: {
-        'style/': {
-          'theme.css': {
-            raw: `
+// Returns the fallback structure for drive datasets like styles and data
+function fallback_instance () {
+  return {
+    drive: {
+      // Style directory with a default theme
+      'style/': {
+        'theme.css': {
+          raw: `
             :host {
-             --b: 0, 0%;
-             --color-white: var(--b), 100%;
-             --color-black: var(--b), 0%;
-             --color-grey: var(--b), 85%;
-             --bg-color: var(--color-grey);
-             --shadow-xy: 0 0;
-             --shadow-blur: 8px;
-             --shadow-color: var(--color-white);
-             --shadow-opacity: 0;
-             --shadow-opacity-focus: 0.65;
-           }
+              --b: 0, 0%;
+              --color-white: var(--b), 100%;
+              --color-black: var(--b), 0%;
+              --color-grey: var(--b), 85%;
+              --bg-color: var(--color-grey);
+              --shadow-xy: 0 0;
+              --shadow-blur: 8px;
+              --shadow-color: var(--color-white);
+              --shadow-opacity: 0;
+              --shadow-opacity-focus: 0.65;
+            }
 
-           input {
-             text-align: left;
-             align-items: center;
-             font-size: 1.4rem;
-             font-weight: 200;
-             color: hsla(var(--color-black), 1);
-             background-color: hsla(var(--bg-color), 1);
-             padding: 8px 12px;
-             box-shadow: var(--shadow-xy) var(--shadow-blur) hsla(var(--shadow-color), var(--shadow-opacity));
-             transition: font-size 0.3s, color 0.3s, background-color 0.3s, box-shadow 0.3s ease-in-out;
-             outline: none;
-             border: 1px solid hsla(var(--bg-color), 1);
-             border-radius: 8px;
-           }
+            input {
+              text-align: left;
+              align-items: center;
+              font-size: 1.4rem;
+              font-weight: 200;
+              color: hsla(var(--color-black), 1);
+              background-color: hsla(var(--bg-color), 1);
+              padding: 8px 12px;
+              box-shadow: var(--shadow-xy) var(--shadow-blur) hsla(var(--shadow-color), var(--shadow-opacity));
+              transition: font-size 0.3s, color 0.3s, background-color 0.3s, box-shadow 0.3s ease-in-out;
+              outline: none;
+              border: 1px solid hsla(var(--bg-color), 1);
+              border-radius: 8px;
+            }
 
-           input:focus {
-             --shadow-color: var(--color-black);
-             --shadow-opacity: var(--shadow-opacity-focus);
-             --shadow-xy: 4px 4px;
-             box-shadow: var(--shadow-xy) var(--shadow-blur) hsla(var(--shadow-color), var(--shadow-opacity));
-           }
+            input:focus {
+              --shadow-color: var(--color-black);
+              --shadow-opacity: var(--shadow-opacity-focus);
+              --shadow-xy: 4px 4px;
+              box-shadow: var(--shadow-xy) var(--shadow-blur) hsla(var(--shadow-color), var(--shadow-opacity));
+            }
 
-             input::-webkit-outer-spin-button,
-             input::-webkit-inner-spin-button {
-             -webkit-appearance: none;
-           }
-            `
-          }
+            input::-webkit-outer-spin-button,
+            input::-webkit-inner-spin-button {
+              -webkit-appearance: none;
+            }
+          `
         }
       },
-      _: {},  // No submodules being used
-    }
+
+      // Data directory with input configuration for age and birth year
+      'data/': {
+        'age.opts.json': {
+          value: {
+            min: 1,
+            max: 150
+          }
+        },
+        'birthyear.opts.json': {
+          value: {
+            min: 1872,
+            max: 2025
+          }
+        }
+      }
+    },
+    
+    // No submodules used
+    _: {}
   }
+}

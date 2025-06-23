@@ -1,8 +1,13 @@
 // page.js
+const STATE = require('../src/node_modules/STATE')
+const statedb = STATE(__filename)
+const { sdb, get } = statedb(fallback_module)
+
+
 const input_integer = require('..')
 
-const opts1 = { min: 1, max: 150 }
-const opts2 = { min: 1872, max: 2025 }
+const opts1 = { sid: 'age' }
+const opts2 = { sid: 'birthyear' }
 const state = {}
 
 function protocol (message, notify) {
