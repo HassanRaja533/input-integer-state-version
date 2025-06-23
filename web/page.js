@@ -1,5 +1,5 @@
 // page.js
-const STATE = require('../src/node_modules/STATE')
+const STATE = require('STATE')
 const statedb = STATE(__filename)
 const { sdb, get } = statedb(fallback_module)
 
