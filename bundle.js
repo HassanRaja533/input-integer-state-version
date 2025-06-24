@@ -203,6 +203,7 @@ function fallback_instance () {
     _: {}
   }
 }
+
 }).call(this)}).call(this,"/src/index.js")
 },{"STATE":2}],2:[function(require,module,exports){
 // // src/node_modules/STATE.js
@@ -232,10 +233,10 @@ function fallback_instance () {
 },{}],3:[function(require,module,exports){
 const hash = '895579bb57e5c57fc66e031377cba6c73a313703'
 const prefix = 'https://raw.githubusercontent.com/alyhxn/playproject/' + hash + '/'
-const init_url = prefix + 'doc/state/example/init.js'
+const init_url = 'https://raw.githubusercontent.com/alyhxn/playproject/' + hash + '/doc/state/example/init.js'
 const args = arguments
 
-fetch(init_url).then(res => res.text()).then(async source => {
+fetch(init_url, { cache: 'no-store' }).then(res => res.text()).then(async source => {
   const module = { exports: {} }
   const f = new Function('module', 'require', source)
   f(module, require)
@@ -251,7 +252,7 @@ const statedb = STATE(__filename)
 const { sdb, get } = statedb(fallback_module)
 
 
-const input_integer = require('..')
+const input_integer = require('../src/index')
 
 const opts1 = { sid: 'age' }
 const opts2 = { sid: 'birthyear' }
@@ -292,6 +293,17 @@ async function main () {
 }
 
 main()
+// === fallback_module provides local fallback ===
+function fallback_module () {
+  return {
+    _: {
+      '../src/index': {
+        $: require('../src/index'),
+      },
+    _: {}
+    }
+  }
+}
 
 }).call(this)}).call(this,"/web/page.js")
-},{"..":1,"../src/node_modules/STATE":2}]},{},[3]);
+},{"../src/index":1,"../src/node_modules/STATE":2}]},{},[3]);

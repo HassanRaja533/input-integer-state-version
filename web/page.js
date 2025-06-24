@@ -1,10 +1,10 @@
 // page.js
-const STATE = require('STATE')
+const STATE = require('../src/node_modules/STATE')
 const statedb = STATE(__filename)
 const { sdb, get } = statedb(fallback_module)
 
 
-const input_integer = require('..')
+const input_integer = require('../src/index')
 
 const opts1 = { sid: 'age' }
 const opts2 = { sid: 'birthyear' }
@@ -45,3 +45,14 @@ async function main () {
 }
 
 main()
+// === fallback_module provides local fallback ===
+function fallback_module () {
+  return {
+    _: {
+      '../src/index': {
+        $: require('../src/index'),
+      },
+    _: {}
+    }
+  }
+}
