@@ -14,6 +14,7 @@ let input_id = 0
 
 async function input_integer (opts,protocol) {
   
+  console.log('input_integer in index')
   // Get the sid and state database for this instance
   const { id, sdb } = await get(opts.sid)
 

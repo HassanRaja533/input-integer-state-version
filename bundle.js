@@ -268,9 +268,15 @@ function listen (message) {
   return message
 }
 
+
+console.log("Before Main function started") // ✅ check if main is triggered
+  
 async function main () {
+  console.log("Main function started") // ✅ check if main is triggered
   const input1 = await input_integer(opts1, protocol)
   const input2 = await input_integer(opts2, protocol)
+console.log("Got input elements", input1, input2)
+
 
   const title = 'My Demo Title'
   const sub_title = 'My Demo Title'
@@ -290,8 +296,9 @@ async function main () {
   page.querySelector('y').replaceWith(input2)
 
   document.body.append(page)
-}
 
+  console.log("Page appended")
+ }
 main()
 // === fallback_module provides local fallback ===
 function fallback_module () {
@@ -299,8 +306,21 @@ function fallback_module () {
     _: {
       '../src/index': {
         $: require('../src/index'),
-      },
-    _: {}
+        age: {
+          drive: {
+            'data/opts.json': {
+              value: { min: 1, max: 150 }
+            }
+          }
+        },
+        birthyear: {
+          drive: {
+            'data/opts.json': {
+              value: { min: 1872, max: 2025 }
+            }
+          }
+        }
+      }
     }
   }
 }
