@@ -17,7 +17,7 @@ async function input_integer (opts,protocol) {
   console.log('input_integer in index')
   // Get the sid and state database for this instance
   const { id, sdb } = await get(opts.sid)
-console.log('sid:', input_id)
+  console.log('sid:', input_id)
   // This object maps dataset keys to their update handlers (called on changes)
 
   const on = {

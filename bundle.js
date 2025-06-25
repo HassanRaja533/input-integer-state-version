@@ -19,7 +19,7 @@ async function input_integer (opts,protocol) {
   console.log('input_integer in index')
   // Get the sid and state database for this instance
   const { id, sdb } = await get(opts.sid)
-console.log('sid:', input_id)
+  console.log('sid:', input_id)
   // This object maps dataset keys to their update handlers (called on changes)
 
   const on = {
@@ -270,13 +270,13 @@ function listen (message) {
 }
 
 
-console.log("Before Main function started") // ✅ check if main is triggered
+  console.log("Before Main function started") // ✅ check if main is triggered
   
 async function main () {
   console.log("Main function started") // ✅ check if main is triggered
   const input1 = await input_integer(opts1, protocol)
   const input2 = await input_integer(opts2, protocol)
-console.log("Got input elements", input1, input2)
+  console.log("Got input elements", input1, input2)
 
 
   const title = 'My Demo Title'
