@@ -16,9 +16,10 @@ let input_id = 0
 
 async function input_integer (opts,protocol) {
   
+  console.log('input_integer in index')
   // Get the sid and state database for this instance
   const { id, sdb } = await get(opts.sid)
-
+console.log('sid:', input_id)
   // This object maps dataset keys to their update handlers (called on changes)
 
   const on = {
@@ -28,7 +29,7 @@ async function input_integer (opts,protocol) {
 
    // Load config from drive/data/opts.json (fallback will provide defaults)
   const config = await sdb.get(`data/${id}.opts.json`)
-  
+  console.log(`Loaded config for "${id}":`, config)
   // Destructure input min/max or default to 0/1000
 
   const { min = 0, max = 1000 } = config
@@ -127,7 +128,7 @@ function inject (data) {
 // This fallback_module function is required for STATE initialization
 function fallback_module () {
   return {
-    api: fallback_instance // Used to customize API (like styles or icons)
+    api: fallback_instance () // Used to customize API (like styles or icons)
    
   }
 }
@@ -299,25 +300,19 @@ console.log("Got input elements", input1, input2)
 
   console.log("Page appended")
  }
-main()
-// === fallback_module provides local fallback ===
+ main()
+
+
 function fallback_module () {
   return {
     _: {
       '../src/index': {
-        $: require('../src/index'),
-        age: {
-          drive: {
-            'data/opts.json': {
-              value: { min: 1, max: 150 }
-            }
-          }
-        },
-        birthyear: {
-          drive: {
-            'data/opts.json': {
-              value: { min: 1872, max: 2025 }
-            }
+        drive: {
+          'data/age.opts.json': {
+            value: { min: 5, max: 50 }
+          },
+          'data/birthyear.opts.json': {
+            value: { min: 1920, max: 2025 }
           }
         }
       }

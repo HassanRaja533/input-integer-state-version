@@ -51,24 +51,19 @@ console.log("Got input elements", input1, input2)
 
   console.log("Page appended")
  }
-main()
-// === fallback_module provides local fallback ===
+ main()
+
+
 function fallback_module () {
   return {
     _: {
       '../src/index': {
-        age: {
-          drive: {
-            'data/opts.json': {
-              value: { min: 5, max: 50 }
-            }
-          }
-        },
-        birthyear: {
-          drive: {
-            'data/opts.json': {
-              value: { min: 1920, max: 2025 }
-            }
+        drive: {
+          'data/age.opts.json': {
+            value: { min: 5, max: 50 }
+          },
+          'data/birthyear.opts.json': {
+            value: { min: 1920, max: 2025 }
           }
         }
       }
