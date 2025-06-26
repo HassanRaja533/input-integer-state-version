@@ -54,26 +54,12 @@ async function main () {
  
 main()
 
- 
 function fallback_module () {
-  return {
-    api: fallback_instance, 
-    _: {
-      '../src/index': {
-        $: '', 
-      }
-    }
-  }
-}
-
-function fallback_instance () {
     return {
       _: {
        '../src/index': {
-          0 :'',
-          mapping: {
-            style: 'style'
-          }
+          $: '',
+         // 0 :''
         }
        },
       drive : {
