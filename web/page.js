@@ -59,7 +59,7 @@ function fallback_module () {
       _: {
        '../src/index': {
           $: '',
-         // 0 :''
+          0 :''
         }
        },
       drive : {
