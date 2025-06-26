@@ -52,7 +52,7 @@ async function main () {
   console.log("Page appended")
  }
  
-
+main()
 
  
 function fallback_module () {
@@ -66,21 +66,17 @@ function fallback_module () {
   }
 }
 
-
-
 function fallback_instance () {
     return {
       _: {
-        '../src/index': {
-        0:'',
+       '../src/index': {
+          0 :'',
           mapping: {
             style: 'style'
           }
         }
-       }
-       ,
-      drive: {
-        
+       },
+      drive : {
         'data/': {
           'age.opts.json': {
             value: {
