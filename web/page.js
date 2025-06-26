@@ -67,12 +67,12 @@ function fallback_module () {
 }
 
 
- 
+
 function fallback_instance () {
     return {
       _: {
         '../src/index': {
-       0:'',
+        0:'',
           mapping: {
             style: 'style'
           }
@@ -80,17 +80,19 @@ function fallback_instance () {
        }
        ,
       drive: {
-        'style/': {
-          'theme.css': {
-            raw: `
-              .element-class {
-                display: flex;
-                align-items: center;
-                background-color: #212121;
-                padding: 0.5rem;
-                // min-width: 456px
-              }
-            `
+        
+        'data/': {
+          'age.opts.json': {
+            value: {
+              min: 5,
+              max: 50
+            }
+          },
+          'birthyear.opts.json': {
+            value: {
+              min: 2000,
+              max: 2024
+            }
           }
         }
       }
