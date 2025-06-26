@@ -5,7 +5,7 @@ const { sdb, get } = statedb(fallback_module)
 
 
 const input_integer = require('../src/index')
-
+module.exports = main
 const opts1 = { sid: 'age' }
 const opts2 = { sid: 'birthyear' }
 const state = {}
@@ -17,7 +17,7 @@ function protocol (message, notify) {
 }
 
 function listen (message) {
-  return message
+  console.log(message) 
 }
 
 
@@ -51,22 +51,48 @@ async function main () {
 
   console.log("Page appended")
  }
- main()
+ 
 
 
+ 
 function fallback_module () {
   return {
+    api: fallback_instance, 
     _: {
       '../src/index': {
-        drive: {
-          'data/age.opts.json': {
-            value: { min: 5, max: 50 }
-          },
-          'data/birthyear.opts.json': {
-            value: { min: 1920, max: 2025 }
+        $: '', 
+      }
+    }
+  }
+}
+
+
+ 
+function fallback_instance () {
+    return {
+      _: {
+        '../src/index': {
+       0:'',
+          mapping: {
+            style: 'style'
+          }
+        }
+       }
+       ,
+      drive: {
+        'style/': {
+          'theme.css': {
+            raw: `
+              .element-class {
+                display: flex;
+                align-items: center;
+                background-color: #212121;
+                padding: 0.5rem;
+                // min-width: 456px
+              }
+            `
           }
         }
       }
     }
   }
-}
