@@ -129,8 +129,8 @@ async function input_integer (opts, protocol) {
 
   try {
     // Get the sid and state database for this instance
-    const { id1, sdb } = await get(opts.sid)
-    console.log('sid:', opts.sid, '→ resolved id:', id)
+    const { id, sdb } = await get(opts.sid)
+    //console.log('sid:', opts.sid, '→ resolved id:', id)
 
     const on = {
       style: inject
@@ -271,16 +271,20 @@ function fallback_instance () {
 
         'data/': {
           'age.opts.json': {
-            value: {
-              min: 1,
-              max: 150
+            raw:{
+             value: {
+               min: 1,
+               max: 150
             }
+          }
           },
           'birthyear.opts.json': {
-            value: {
-              min: 1872,
-              max: 2025
+            raw:{
+             value: {
+               min: 1872,
+               max: 2025
             }
+          }
           }
         }
       },
@@ -386,23 +390,28 @@ async function main () {
  
 main()
 
-function fallback_module () {
-    return {
-      _: {
-       '../src/index': {
-          $: '',
-         // 0 :''
-        }
-       },
-      drive : {
-        'data/': {
-          'age.opts.json': {
+function fallback_module() {
+  return {
+    _: {
+     '../src/index': {      
+        0: { raw: 'data/age.opts.json' },
+        1: { raw: 'data/birthyear.opts.json' }
+      }
+    },
+    drive: {
+      'data/': {
+        // JSON config for the first instance (sid 0)
+        'age.opts.json': {
+          raw: {
             value: {
               min: 5,
               max: 50
             }
-          },
-          'birthyear.opts.json': {
+          }
+        },
+        // JSON config for the second instance (sid 1)
+        'birthyear.opts.json': {
+          raw: {
             value: {
               min: 2000,
               max: 2024
@@ -411,7 +420,8 @@ function fallback_module () {
         }
       }
     }
-  }
+  };
+}
 
 }).call(this)}).call(this,"/web/page.js")
 },{"../src/index":1,"../src/node_modules/STATE":2}]},{},[3]);

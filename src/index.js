@@ -127,8 +127,8 @@ async function input_integer (opts, protocol) {
 
   try {
     // Get the sid and state database for this instance
-    const { id1, sdb } = await get(opts.sid)
-    console.log('sid:', opts.sid, '→ resolved id:', id)
+    const { id, sdb } = await get(opts.sid)
+    //console.log('sid:', opts.sid, '→ resolved id:', id)
 
     const on = {
       style: inject
@@ -269,16 +269,20 @@ function fallback_instance () {
 
         'data/': {
           'age.opts.json': {
-            value: {
-              min: 1,
-              max: 150
+            raw:{
+             value: {
+               min: 1,
+               max: 150
             }
+          }
           },
           'birthyear.opts.json': {
-            value: {
-              min: 1872,
-              max: 2025
+            raw:{
+             value: {
+               min: 1872,
+               max: 2025
             }
+          }
           }
         }
       },
