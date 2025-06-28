@@ -206,8 +206,6 @@ async function input_integer (opts, protocol) {
   }
 }
 
-
-
 // ============ Fallback Setup for STATE ============
 
 // This fallback_module function is required for STATE initialization
@@ -218,7 +216,8 @@ function fallback_module () {
 }
 // Returns the fallback structure for drive datasets like styles and data
 
-function fallback_instance () {
+function fallback_instance (opts) {
+  console.log('make instance:', opts)
     return {
       drive: {
         'style/': {
@@ -269,24 +268,13 @@ function fallback_instance () {
 
         'data/': {
           'age.opts.json': {
-            raw:{
-             value: {
-               min: 1,
-               max: 150
-            }
-          }
+            raw: opts 
           },
           'birthyear.opts.json': {
-            raw:{
-             value: {
-               min: 1872,
-               max: 2025
-            }
-          }
+            raw: opts 
           }
         }
       },
       _: {}
     }
-  
   }

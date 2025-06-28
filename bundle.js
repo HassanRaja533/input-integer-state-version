@@ -208,8 +208,6 @@ async function input_integer (opts, protocol) {
   }
 }
 
-
-
 // ============ Fallback Setup for STATE ============
 
 // This fallback_module function is required for STATE initialization
@@ -220,7 +218,8 @@ function fallback_module () {
 }
 // Returns the fallback structure for drive datasets like styles and data
 
-function fallback_instance () {
+function fallback_instance (opts) {
+  console.log('make instance:', opts)
     return {
       drive: {
         'style/': {
@@ -271,26 +270,15 @@ function fallback_instance () {
 
         'data/': {
           'age.opts.json': {
-            raw:{
-             value: {
-               min: 1,
-               max: 150
-            }
-          }
+            raw: opts 
           },
           'birthyear.opts.json': {
-            raw:{
-             value: {
-               min: 1872,
-               max: 2025
-            }
-          }
+            raw: opts 
           }
         }
       },
       _: {}
     }
-  
   }
 }).call(this)}).call(this,"/src/index.js")
 },{"STATE":2}],2:[function(require,module,exports){
@@ -393,31 +381,10 @@ main()
 function fallback_module() {
   return {
     _: {
-     '../src/index': {      
-        0: { raw: 'data/age.opts.json' },
-        1: { raw: 'data/birthyear.opts.json' }
-      }
-    },
-    drive: {
-      'data/': {
-        // JSON config for the first instance (sid 0)
-        'age.opts.json': {
-          raw: {
-            value: {
-              min: 5,
-              max: 50
-            }
-          }
-        },
-        // JSON config for the second instance (sid 1)
-        'birthyear.opts.json': {
-          raw: {
-            value: {
-              min: 2000,
-              max: 2024
-            }
-          }
-        }
+     '../src/index': {     
+        $:'', 
+        0: { value: { min: 5, max: 50 }  },
+        1: { value: { min: 2000, max: 2024 } }     
       }
     }
   };
