@@ -67,6 +67,7 @@ const input_integer = require('../src/index'); // Imports the child
 ---
 
 ## fallback_module vs fallback_instance function
+
 Understanding how `fallback_module` and `fallback_instance` behave is essential when working with the STATE library.
 
 - A **module fallback** runs **once per module**, when it is required using `require()`.
@@ -99,7 +100,7 @@ const input_integer = require('../src/index');
 
 ### Fallback_module function's properties
 
-- It returns an object that can include 3 optional properties:
+- It returns an object that can include 3 properties:
 **1. `_` (underscore)** 
     - This property is used **only when your module requires or imports another module** (i.e., a submodule).
     - It defines how submodules should behave and what data they get.
@@ -388,3 +389,18 @@ and
      api: fallback_instance // Used to customize API (like styles or icons)
    }
  }
+```
+
+---
+
+## fallback_instance function
+In `fallback_instance`, the main difference is:
+
+- It **does not** have a `$` property inside the `_` object to represent the module path.
+
+That’s why the `$` property in the `_` section of `fallback_module` is **mandatory**, regardless of whether you use:
+
+- `fallback_module` to define instances directly, or
+- `fallback_instance` to generate them dynamically.
+
+This `$` tells the system **which module** the instances are being created from.
