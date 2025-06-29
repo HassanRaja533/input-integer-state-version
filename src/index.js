@@ -93,6 +93,7 @@ async function input_integer (opts, protocol) {
 // This fallback_module function is required for STATE initialization
 function fallback_module () {
   return {
+    drive: {},
     api: fallback_instance,// Used to customize API (like styles or icons)
   }
 

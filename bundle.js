@@ -95,6 +95,7 @@ async function input_integer (opts, protocol) {
 // This fallback_module function is required for STATE initialization
 function fallback_module () {
   return {
+    drive: {},
     api: fallback_instance,// Used to customize API (like styles or icons)
   }
 
@@ -281,13 +282,15 @@ main()
 
 function fallback_module() {
   return {
+    drive: {},
     _: {
      '..': {    
         $:'' ,
         0: { value: { min: 5, max: 50 }  },
         1: { value: { min: 2000, max: 2024 } } ,
         mapping: {
-          style: 'style'
+          style: 'style',
+          data: 'data'
         }    
       }
     }
