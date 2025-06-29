@@ -146,10 +146,7 @@ function fallback_module () {
         },
 
         'data/': {
-          'age.opts.json': {
-            raw: opts 
-          },
-          'birthyear.opts.json': {
+          'opts.json': {
             raw: opts 
           }
         }

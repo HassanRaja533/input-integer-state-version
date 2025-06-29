@@ -148,10 +148,7 @@ function fallback_module () {
         },
 
         'data/': {
-          'age.opts.json': {
-            raw: opts 
-          },
-          'birthyear.opts.json': {
+          'opts.json': {
             raw: opts 
           }
         }
@@ -287,7 +284,10 @@ function fallback_module() {
      '../src/index': {    
         $:'' ,
         0: { value: { min: 5, max: 50 }  },
-        1: { value: { min: 2000, max: 2024 } }     
+        1: { value: { min: 2000, max: 2024 } } ,
+        mapping: {
+          style: 'style'
+        }    
       }
     }
   };
