@@ -19,16 +19,35 @@ function protocol (message, notify) {
 function listen (message) {
   console.log(message) 
 }
+  
+const on = {
+  // This will handle all incoming value updates
+  value: handleValue
+}
 
+// This is the core watch handler
+function onbatch(batch) {
+  console.log('📦 Watch triggered with batch:', batch)
+  for (const { type, data } of batch) {
+    if (on[type]) {
+      on[type](data)
+    }
+  }
+}
+
+// Called when any input module sends a value update
+function handleValue(data) {
+  console.log(`✅ SID "${data.id}" value is now:`, data.value)
+}
 
   console.log("Before Main function started") // ✅ check if main is triggered
   
 async function main () {
   console.log("Main function started") // ✅ check if main is triggered
-  const input1 = await input_integer(opts1, protocol)
-  const input2 = await input_integer(opts2, protocol)
-  console.log("Got input elements", input1, input2)
-
+   const subs = await sdb.watch(onbatch) 
+  const input1 = await input_integer(subs[0], protocol)
+  const input2 = await input_integer(subs[1], protocol)
+  //console.log("Got input elements", input1, input2)
 
   const title = 'My Demo Title'
   const sub_title = 'My Demo Title'
@@ -49,16 +68,18 @@ async function main () {
 
   document.body.append(page)
 
+  
   console.log("Page appended")
- }
+
+}
  
 main()
 
 function fallback_module() {
   return {
     _: {
-     '../src/index': {     
-        $:'', 
+     '../src/index': {    
+        $:'' ,
         0: { value: { min: 5, max: 50 }  },
         1: { value: { min: 2000, max: 2024 } }     
       }

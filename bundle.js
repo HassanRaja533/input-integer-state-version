@@ -10,125 +10,10 @@ const { sdb, get } = statedb(fallback_module) // Initialize state DB with fallba
 module.exports = input_integer
 
 let input_id = 0
-// const sheet = new CSSStyleSheet()
-// const theme = get_theme()
-// sheet.replaceSync(theme)
-
-// async function input_integer (opts,protocol) {
-  
-//   console.log('input_integer in index')
-//   // Get the sid and state database for this instance
-//   const { id, sdb } = await get(opts.sid)
-//   console.log('sid:', input_id)
-//   // This object maps dataset keys to their update handlers (called on changes)
-
-//   const on = {
-//     style: inject
-//   }
-
-
-//    // Load config from drive/data/opts.json (fallback will provide defaults)
-//   const config = await sdb.get(`data/${id}.opts.json`)
-//   console.log(`Loaded config for "${id}":`, config)
-//   // Destructure input min/max or default to 0/1000
-
-//   const { min = 0, max = 1000 } = config
-//   const name = `input-integr-${input_id++}`
-
-//   // Setup protocol communication with the outside (like parent component)
-
-//   const notify = protocol({ from: name }, listen)
-
-//   // Create root element and shadow DOM
-
-//   const el = document.createElement('div')
-//   const shadow = el.attachShadow({ mode: 'closed' })
-
-//    // Create input element
-//   const input = document.createElement('input')
-//   input.type = 'number'
-//   input.min = min // opts.min
-//   input.max = max // opts.max
-  
-//   // Bind input events to their handlers
-
-//   input.onkeyup = (e) => handle_onkeyup(e, input, min, max)
-//   input.onmouseleave = (e) => handle_onmouseleave_and_blur(e, input, min)
-//   input.onblur = (e) => handle_onmouseleave_and_blur(e, input, min)
-  
-//   // Add the input to the shadow DOM
-
-//   shadow.append(input)
-//   //shadow.adoptedStyleSheets = [sheet]
-  
-//   // Watch for updates in drive (e.g., style changes)
-
-//   const subs = await sdb.watch(onbatch)
-
-//   // Return the main element
-
-//   return el
-
-//   // Handle incoming messages (e.g., update the input value)
-
-//   function listen (message) {
-//     const { type, data } = message
-//     if (type === 'update') {
-//       input.value = data
-//     }
-//   }
-  
-
-//   // ============ Inner functions ============
-
-//   // Handle keyup events for live validation
-//   function handle_onkeyup (e, input, min, max) {
-//     const val = Number(e.target.value)
-//     const val_len = val.toString().length // e.target.value.length
-//     const min_len = min.toString().length
-
-//     if (val > max) {
-//       input.value = max
-//     }  else if (val_len === min_len && val < min) {
-//       input.value = input.value = min // 1872
-//     }
-
-//     // Notify parent or subscriber of the updated value
-//     notify({ from: name, type: 'update', data: val })
-//   }
-
-//   // Handle when mouse leaves input or input loses focus
-//   function handle_onmouseleave_and_blur (e, input, min) {
-//     const val = Number(e.target.value)
-//     if (val < min) input.value = ''
-//   }
-// }
-
-
-
-//   // Injects CSS into shadow DOM using adopted stylesheets
-
-// function inject (data) {
-//     const sheet = new CSSStyleSheet()
-//     sheet.replaceSync(data)
-//     shadow.adoptedStyleSheets = [sheet]
-//   }
-
-//     // Triggered whenever a watched dataset is updated
-
-//   function onbatch (batch) {
-//     for (const { type, data } of batch) {
-//       on[type] && on[type](data)
-//     }
-//   }
-
-
 
 async function input_integer (opts, protocol) {
   console.log('input_integer in index')
-
-  try {
-    // Get the sid and state database for this instance
+   // Get the sid and state database for this instance
     const { id, sdb } = await get(opts.sid)
     //console.log('sid:', opts.sid, '→ resolved id:', id)
 
@@ -138,7 +23,7 @@ async function input_integer (opts, protocol) {
 
     // Load config from drive/data/opts.json (fallback will provide defaults)
     const config = await sdb.get(`data/${id}.opts.json`)
-    console.log(`Loaded config for "${id}":`, config)
+    //console.log(`Loaded config for "${id}":`, config)
 
     const { min = 0, max = 1000 } = config
     const name = `input-integr-${input_id++}`
@@ -202,24 +87,18 @@ async function input_integer (opts, protocol) {
       }
     }
 
-  } catch (error) {
-    console.error('❌ Error in input_integer:', error)
-    throw error // rethrow in case caller wants to handle it
-  }
-}
+  } 
 
 // ============ Fallback Setup for STATE ============
 
 // This fallback_module function is required for STATE initialization
 function fallback_module () {
   return {
-    api: fallback_instance// Used to customize API (like styles or icons)
+    api: fallback_instance,// Used to customize API (like styles or icons)
   }
-}
-// Returns the fallback structure for drive datasets like styles and data
 
-function fallback_instance (opts) {
-  console.log('make instance:', opts)
+  function fallback_instance (opts) {
+    console.log('make instance:', opts)
     return {
       drive: {
         'style/': {
@@ -276,10 +155,13 @@ function fallback_instance (opts) {
             raw: opts 
           }
         }
-      },
-      _: {}
+      }
     }
   }
+}
+// Returns the fallback structure for drive datasets like styles and data
+
+
 }).call(this)}).call(this,"/src/index.js")
 },{"STATE":2}],2:[function(require,module,exports){
 // // src/node_modules/STATE.js
@@ -343,16 +225,35 @@ function protocol (message, notify) {
 function listen (message) {
   console.log(message) 
 }
+  
+const on = {
+  // This will handle all incoming value updates
+  value: handleValue
+}
 
+// This is the core watch handler
+function onbatch(batch) {
+  console.log('📦 Watch triggered with batch:', batch)
+  for (const { type, data } of batch) {
+    if (on[type]) {
+      on[type](data)
+    }
+  }
+}
+
+// Called when any input module sends a value update
+function handleValue(data) {
+  console.log(`✅ SID "${data.id}" value is now:`, data.value)
+}
 
   console.log("Before Main function started") // ✅ check if main is triggered
   
 async function main () {
   console.log("Main function started") // ✅ check if main is triggered
-  const input1 = await input_integer(opts1, protocol)
-  const input2 = await input_integer(opts2, protocol)
-  console.log("Got input elements", input1, input2)
-
+   const subs = await sdb.watch(onbatch) 
+  const input1 = await input_integer(subs[0], protocol)
+  const input2 = await input_integer(subs[1], protocol)
+  //console.log("Got input elements", input1, input2)
 
   const title = 'My Demo Title'
   const sub_title = 'My Demo Title'
@@ -373,16 +274,18 @@ async function main () {
 
   document.body.append(page)
 
+  
   console.log("Page appended")
- }
+
+}
  
 main()
 
 function fallback_module() {
   return {
     _: {
-     '../src/index': {     
-        $:'', 
+     '../src/index': {    
+        $:'' ,
         0: { value: { min: 5, max: 50 }  },
         1: { value: { min: 2000, max: 2024 } }     
       }
