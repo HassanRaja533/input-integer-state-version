@@ -10,8 +10,9 @@ module.exports = input_integer
 let input_id = 0
 
 async function input_integer (opts, protocol) {
-  console.log('input_integer in index')
+    console.log('input_integer in index')
    // Get the sid and state database for this instance
+    console.log (opts.sid) 
     const { id, sdb } = await get(opts.sid)
     //console.log('sid:', opts.sid, '→ resolved id:', id)
 
@@ -20,7 +21,7 @@ async function input_integer (opts, protocol) {
     }
 
     // Load config from drive/data/opts.json (fallback will provide defaults)
-    const config = await sdb.get(`data/${id}.opts.json`)
+    const config = await sdb.drive.get('data/opts.json')
     //console.log(`Loaded config for "${id}":`, config)
 
     const { min = 0, max = 1000 } = config
