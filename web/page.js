@@ -4,7 +4,7 @@ const statedb = STATE(__filename)
 const { sdb, get } = statedb(fallback_module)
 
 
-const input_integer = require('../src/index')
+const input_integer = require('..')
 module.exports = main
 const opts1 = { sid: 'age' }
 const opts2 = { sid: 'birthyear' }
@@ -78,7 +78,7 @@ main()
 function fallback_module() {
   return {
     _: {
-     '../src/index': {    
+     '..': {    
         $:'' ,
         0: { value: { min: 5, max: 50 }  },
         1: { value: { min: 2000, max: 2024 } } ,
