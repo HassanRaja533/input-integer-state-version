@@ -1,7 +1,6 @@
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 (function (__filename){(function (){
 // Import the STATE module and initialize the state database
-
 const STATE = require('STATE') // Import custom STATE module for managing local state and drive
 const statedb = STATE(__filename) // Bind STATE to this module file for namespaced storage
 const { sdb, get } = statedb(fallback_module) // Initialize state DB with fallback data and get tools
@@ -14,6 +13,7 @@ let input_id = 0
 async function input_integer (opts, protocol) {
     console.log('input_integer in index')
    // Get the sid and state database for this instance
+   
     console.log (opts.sid) 
     const { id, sdb } = await get(opts.sid)
     //console.log('sid:', opts.sid, '→ resolved id:', id)
@@ -187,19 +187,19 @@ function fallback_module () {
 // }
 
 },{}],3:[function(require,module,exports){
-const hash = '895579bb57e5c57fc66e031377cba6c73a313703'
-const prefix = 'https://raw.githubusercontent.com/alyhxn/playproject/' + hash + '/'
-const init_url = 'https://raw.githubusercontent.com/alyhxn/playproject/' + hash + '/doc/state/example/init.js'
-const args = arguments
+
+const prefix = 'https://raw.githubusercontent.com/alyhxn/playproject/main/'
+const init_url = prefix + 'src/node_modules/init.js'
 
 fetch(init_url, { cache: 'no-store' }).then(res => res.text()).then(async source => {
   const module = { exports: {} }
   const f = new Function('module', 'require', source)
   f(module, require)
   const init = module.exports
-  await init(args, prefix)
-  require('./page')
+  await init(arguments, prefix)
+  require('./page') // or whatever is otherwise the main entry of our project
 })
+
 },{"./page":4}],4:[function(require,module,exports){
 (function (__filename){(function (){
 // page.js

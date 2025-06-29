@@ -1,5 +1,4 @@
 // Import the STATE module and initialize the state database
-
 const STATE = require('STATE') // Import custom STATE module for managing local state and drive
 const statedb = STATE(__filename) // Bind STATE to this module file for namespaced storage
 const { sdb, get } = statedb(fallback_module) // Initialize state DB with fallback data and get tools
@@ -12,6 +11,7 @@ let input_id = 0
 async function input_integer (opts, protocol) {
     console.log('input_integer in index')
    // Get the sid and state database for this instance
+   
     console.log (opts.sid) 
     const { id, sdb } = await get(opts.sid)
     //console.log('sid:', opts.sid, '→ resolved id:', id)
