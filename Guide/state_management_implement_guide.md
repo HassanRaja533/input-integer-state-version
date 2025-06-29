@@ -134,16 +134,17 @@ It can be either:
 
  #### Using $: '' (Default Behavior)
 - like in page.js 
+  
   ```js 
-  _ : {
-    '../src/index': {
-        $: '', 
-    }
-  }
+   _ : {
+     '../src/index': {
+         $: '', 
+     }
+   }
    ```
-  - This will use the submodule's internal fallback_module without any modifications.
+ - This will use the submodule's internal fallback_module without any modifications.
 
-  - You still provide instance data using 0, 1, etc.
+ - You still provide instance data using 0, 1, etc.
  
  #### Using $: customFunction (Override Fallback)
 
@@ -178,7 +179,7 @@ example:
 
 **2. drive Property** 
    
-   This section contains data (e.g., styles, JSON files) that you want to make available as defaults via local storage.  
+   This section contains data (e.g., styles, JSON files) that you want to make available as defaults via local storage.
     It typically includes:
     - Stylesheets
     - Icons/SVGs
@@ -381,7 +382,7 @@ and
 
 - This points to another function, e.g `fallback_instance` 
     
-** api Example:**
+**api Example:**
 
 ```js
   function fallback_module () {
