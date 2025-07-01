@@ -5,7 +5,7 @@ const { sdb, get } = statedb(fallback_module)
 
 
 const input_integer = require('..')
-module.exports = main
+//module.exports = main
 const opts1 = { sid: 'age' }
 const opts2 = { sid: 'birthyear' }
 const state = {}

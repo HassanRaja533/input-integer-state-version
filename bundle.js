@@ -43,15 +43,26 @@ async function input_integer (opts, protocol) {
     input.onmouseleave = (e) => handle_onmouseleave_and_blur(e, input, min)
     input.onblur = (e) => handle_onmouseleave_and_blur(e, input, min)
 
+    const css = await sdb.drive.get('style/theme.css')
+    inject(css)
+    
     shadow.append(input)
 
     // Move inject() inside to access shadow
-    function inject (data) {
-      const sheet = new CSSStyleSheet()
-      sheet.replaceSync(data)
-      shadow.adoptedStyleSheets = [sheet]
-    }
+    // function inject (data) {
+    //   const sheet = new CSSStyleSheet()
+    //   sheet.replaceSync(data)
+    //   shadow.adoptedStyleSheets = [sheet]
+    // }
+    function inject(data) {
+    console.log('Injecting style:', data)
+    const sheet = new CSSStyleSheet()
 
+    if (data?.raw) {
+    sheet.replaceSync(data.raw || '') // ensure raw exists
+    shadow.adoptedStyleSheets = [sheet]
+    }
+  }
     await sdb.watch(onbatch)
 
     return el
@@ -188,7 +199,6 @@ function fallback_module () {
 // }
 
 },{}],3:[function(require,module,exports){
-
 const prefix = 'https://raw.githubusercontent.com/alyhxn/playproject/main/'
 const init_url = prefix + 'src/node_modules/init.js'
 
@@ -210,7 +220,7 @@ const { sdb, get } = statedb(fallback_module)
 
 
 const input_integer = require('..')
-module.exports = main
+//module.exports = main
 const opts1 = { sid: 'age' }
 const opts2 = { sid: 'birthyear' }
 const state = {}
