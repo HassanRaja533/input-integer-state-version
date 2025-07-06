@@ -24,8 +24,7 @@ async function input_integer (opts, protocol) {
 
     // Load config from drive/data/opts.json (fallback will provide defaults)
     const config = await sdb.drive.get('data/opts.json')
-    //console.log(`Loaded config for "${id}":`, config)
-
+   
     const { min = 0, max = 1000 } = config
     const name = `input-integr-${input_id++}`
 
@@ -48,12 +47,6 @@ async function input_integer (opts, protocol) {
     
     shadow.append(input)
 
-    // Move inject() inside to access shadow
-    // function inject (data) {
-    //   const sheet = new CSSStyleSheet()
-    //   sheet.replaceSync(data)
-    //   shadow.adoptedStyleSheets = [sheet]
-    // }
     function inject(data) {
     console.log('Injecting style:', data)
     const sheet = new CSSStyleSheet()
@@ -62,7 +55,7 @@ async function input_integer (opts, protocol) {
     sheet.replaceSync(data.raw || '') // ensure raw exists
     shadow.adoptedStyleSheets = [sheet]
     }
-  }
+   }
     await sdb.watch(onbatch)
 
     return el
@@ -169,7 +162,6 @@ function fallback_module () {
     }
   }
 }
-// Returns the fallback structure for drive datasets like styles and data
 
 
 }).call(this)}).call(this,"/src/index.js")
